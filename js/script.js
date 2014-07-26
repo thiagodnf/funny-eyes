@@ -100,10 +100,10 @@ $(function() {
 	
 	if(typeof(Storage) !== "undefined") {
 		if(localStorage.getItem("color-background-screen") === null){
-			localStorage.setItem("color-background-screen", "white");
+			localStorage.setItem("color-background-screen", "#1aff5a");
 		}
 		if(localStorage.getItem("color-background-eyes") === null){
-			localStorage.setItem("color-background-eyes", "red");
+			localStorage.setItem("color-background-eyes", "#ffffff");
 		}
 		if(localStorage.getItem("color-eyes") === null){
 			localStorage.setItem("color-eyes", "black");
@@ -112,7 +112,7 @@ $(function() {
 			localStorage.setItem("color-background-mouth", "red");
 		}
 		if(localStorage.getItem("color-border-mouth") === null){
-			localStorage.setItem("color-border-mouth", "#550000");
+			localStorage.setItem("color-border-mouth", "#000000");
 		}		
 	} else {
 		alert("Sorry! No Web Storage support");
