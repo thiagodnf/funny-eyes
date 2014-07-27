@@ -6,6 +6,10 @@ $(function() {
 	var rightMouseButtonPressed = false;
 	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");	
+	var ANGRY = 1;
+	var NORMAL = 2;
+	var SAD = 3
+	var humor = NORMAL;
 	
 	function resizeCanvas() {
 		canvas.width = $(".container").width();
@@ -49,6 +53,46 @@ $(function() {
 		ctx.arc(LPosX, LPosY, 50, 0, 2 * Math.PI, false);
 		ctx.arc(RPosX, RPosY, 50, 0, 2 * Math.PI, false);
 		ctx.fill();
+
+		//Draw eyebrow
+
+		if(humor == NORMAL){
+			ctx.beginPath();
+			ctx.strokeStyle = colorBorderMouth;
+			ctx.lineWidth = 5;
+			ctx.moveTo((canvas.width/2)-(150+100), 200-100-50);
+			ctx.lineTo((canvas.width/2)-150+100, 200-100-50);			
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.lineWidth = 5;
+			ctx.moveTo((canvas.width/2)+(150+100), 200-100-50);
+			ctx.lineTo((canvas.width/2)+150-100, 200-100-50);			
+			ctx.stroke();
+		}else if(humor == SAD){
+			ctx.beginPath();
+			ctx.strokeStyle = colorBorderMouth;
+			ctx.lineWidth = 5;
+			ctx.moveTo((canvas.width/2)-(150+100)-50, 200-50);
+			ctx.lineTo((canvas.width/2)-150, 200-100-50);			
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.lineWidth = 5;
+			ctx.moveTo((canvas.width/2)+(150+100)+50, 200-50);
+			ctx.lineTo((canvas.width/2)+150, 200-100-50);			
+			ctx.stroke();
+		}else if(humor == ANGRY){
+			ctx.beginPath();
+			ctx.strokeStyle = colorBorderMouth;
+			ctx.lineWidth = 5;
+			ctx.moveTo((canvas.width/2)-150, 200-100-50);
+			ctx.lineTo((canvas.width/2)-20, 200-50);			
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.lineWidth = 5;
+			ctx.moveTo((canvas.width/2)+150, 200-100-50);
+			ctx.lineTo((canvas.width/2)+20, 200-50);			
+			ctx.stroke();
+		}
 		
 		//Draw mouth
 		if(openMouth){
@@ -152,6 +196,35 @@ $(function() {
 		openMouth = false;
 		draw();
 	});	
+
+	$( document ).keypress(function(event) {
+	  if(event.which == 97){
+	  	humor = SAD;
+	  }else if(event.which == 115){
+	  	humor = NORMAL;
+	  }else if(event.which == 100){
+		humor = ANGRY;
+	  }	
+	  draw();
+	});
+
+	$('.container').bind('mousewheel', function(e){
+		if(e.originalEvent.wheelDelta < 0) {
+			//scroll down
+			if(humor != SAD){
+				humor++;
+			}
+		}else {
+			//scroll up
+			if(humor != ANGRY){
+				humor--;
+			}
+		}
+		draw();
+
+	    //prevent page fom scrolling
+	    return false;
+	});
 	
 	function loadColorsInColorPicker(key,color){
 		$(".colorpicker-"+key).colorpicker('setValue', localStorage.getItem(key));
