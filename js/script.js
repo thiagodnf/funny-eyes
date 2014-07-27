@@ -10,6 +10,7 @@ $(function() {
 	var NORMAL = 2;
 	var SAD = 3
 	var humor = NORMAL;
+	var closedEyes = false;
 	
 	function resizeCanvas() {
 		canvas.width = $(".container").width();
@@ -42,21 +43,24 @@ $(function() {
 		$("body").css("background-color",colorBackgroundScreen);
 		
 		ctx.clearRect (0 , 0 , canvas.width,600 );
-		ctx.fillStyle = colorBackgroundEyes;	
-		ctx.beginPath();
-		ctx.arc((canvas.width/2)-150, 200, 100, 0, 2 * Math.PI, false);
-		ctx.arc((canvas.width/2)+150, 200, 100, 0, 2 * Math.PI, false);
-		ctx.fill();
-		
-		ctx.beginPath();
-		ctx.fillStyle = colorEyes;
-		ctx.arc(LPosX, LPosY, 50, 0, 2 * Math.PI, false);
-		ctx.arc(RPosX, RPosY, 50, 0, 2 * Math.PI, false);
-		ctx.fill();
+
+		if(!closedEyes){
+			ctx.fillStyle = colorBackgroundEyes;	
+			ctx.beginPath();
+			ctx.arc((canvas.width/2)-150, 200, 100, 0, 2 * Math.PI, false);
+			ctx.arc((canvas.width/2)+150, 200, 100, 0, 2 * Math.PI, false);
+			ctx.fill();
+			
+			ctx.beginPath();
+			ctx.fillStyle = colorEyes;
+			ctx.arc(LPosX, LPosY, 50, 0, 2 * Math.PI, false);
+			ctx.arc(RPosX, RPosY, 50, 0, 2 * Math.PI, false);
+			ctx.fill();
+		}
 
 		//Draw eyebrow
 
-		if(humor == NORMAL){
+		if(! closedEyes && humor == NORMAL){
 			ctx.beginPath();
 			ctx.strokeStyle = colorBorderMouth;
 			ctx.lineWidth = 5;
@@ -68,7 +72,7 @@ $(function() {
 			ctx.moveTo((canvas.width/2)+(150+100), 200-100-50);
 			ctx.lineTo((canvas.width/2)+150-100, 200-100-50);			
 			ctx.stroke();
-		}else if(humor == SAD){
+		}else if(! closedEyes && humor == SAD){
 			ctx.beginPath();
 			ctx.strokeStyle = colorBorderMouth;
 			ctx.lineWidth = 5;
@@ -80,7 +84,7 @@ $(function() {
 			ctx.moveTo((canvas.width/2)+(150+100)+50, 200-50);
 			ctx.lineTo((canvas.width/2)+150, 200-100-50);			
 			ctx.stroke();
-		}else if(humor == ANGRY){
+		}else if(! closedEyes && humor == ANGRY){
 			ctx.beginPath();
 			ctx.strokeStyle = colorBorderMouth;
 			ctx.lineWidth = 5;
@@ -91,6 +95,17 @@ $(function() {
 			ctx.lineWidth = 5;
 			ctx.moveTo((canvas.width/2)+150, 200-100-50);
 			ctx.lineTo((canvas.width/2)+20, 200-50);			
+			ctx.stroke();
+		}
+
+		if(closedEyes){
+			ctx.beginPath();
+			ctx.lineWidth = 5;
+			ctx.strokeStyle = colorBorderMouth;
+			ctx.arc((canvas.width/2)-150, 200, 100, 0, Math.PI, true);
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.arc((canvas.width/2)+150, 200, 100, 0, Math.PI, true);
 			ctx.stroke();
 		}
 		
@@ -190,9 +205,14 @@ $(function() {
 			rightMouseButtonPressed = ! rightMouseButtonPressed;
 		}else if(event.which == 1){
 			openMouth = true;
+		}else if(event.which == 2){
+			closedEyes = true;
 		}
 		draw();
 	}).mouseup(function(event) {
+		if(event.which == 2){
+			closedEyes = false;
+		}
 		openMouth = false;
 		draw();
 	});	
