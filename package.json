@@ -1,0 +1,15 @@
+{
+	"name": "funny-eyes",
+	"description": "A funny eyes",
+	"version": "1.0.0",
+	"author": "Thiago Nascimento",
+	"license": "Apache License, Version 2.0",
+	"main": "server.js",
+	"dependencies": {
+		"express": "~4.0.0",
+		"mongoose": "~3.6.13",
+		"body-parser": "~1.0.1",
+		"serve-static": "*",		
+		"connect": "*"
+	}
+}
