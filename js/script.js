@@ -177,14 +177,8 @@ $(function() {
 		alert("Sorry! No Web Storage support");
 	}
 	
-	//Create colorspickers
-	$('.colorpicker-color-eyes').colorpicker();
-	$('.colorpicker-color-background-eyes').colorpicker();
-	$('.colorpicker-color-background-screen').colorpicker();
-	$('.colorpicker-color-background-mouth').colorpicker();
-	$('.colorpicker-color-border-mouth').colorpicker();
-	
 	$( ".container" ).mousemove(function( event ) {
+		
 		if(rightMouseButtonPressed){
 			return
 		}
@@ -247,12 +241,7 @@ $(function() {
 	});
 	
 	function loadColorsInColorPicker(key,color){
-		$(".colorpicker-"+key).colorpicker('setValue', localStorage.getItem(key));
-		$("#input-"+key).val(localStorage.getItem(key));
-		$(".colorpicker-"+key).colorpicker().on('changeColor', function(ev){
-			localStorage.setItem(key, ev.color.toHex());
-			draw();
-		});
+		$("#"+key).val(color);
 	}
 	
 	$('#changeColorModal').on('show.bs.modal', function () {
@@ -261,7 +250,12 @@ $(function() {
 		loadColorsInColorPicker("color-background-screen",localStorage.getItem("color-background-screen"));		
 		loadColorsInColorPicker("color-background-mouth",localStorage.getItem("color-background-mouth"));		
 		loadColorsInColorPicker("color-border-mouth",localStorage.getItem("color-border-mouth"));		
-	})	
+	});
+
+	$(".color-picker").on('input', function(e){
+		localStorage.setItem($(this).prop("id"), $(this).val());
+		draw();
+	});
 
 	draw();
 });	
