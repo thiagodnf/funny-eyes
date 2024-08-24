@@ -165,10 +165,10 @@ $(function() {
 			localStorage.setItem("color-background-eyes", "#ffffff");
 		}
 		if(localStorage.getItem("color-eyes") === null){
-			localStorage.setItem("color-eyes", "black");
+			localStorage.setItem("color-eyes", "#000000");
 		}
 		if(localStorage.getItem("color-background-mouth") === null){
-			localStorage.setItem("color-background-mouth", "red");
+			localStorage.setItem("color-background-mouth", "#ff0000");
 		}
 		if(localStorage.getItem("color-border-mouth") === null){
 			localStorage.setItem("color-border-mouth", "#000000");
